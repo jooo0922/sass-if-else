@@ -5,25 +5,34 @@
 값이 false이면 else 문을 실행해주도록 내부에서 조건문을 짤 수 있음.
 */
 
-// $radius: true로 한 것은 뭐냐면, 두 번째 인자에 별도의 값을 전달하지 않을 시 기본값 true로 넣어주라는 뜻.
-@mixin btn_radius($h, $radius: true) {
-  padding: 0 20px;
-  height: $h;
-  line-height: $h;
-  text-align: center;
-  background: #000;
-  color: #fff;
+/*
+parameter 하나만 가지고도 if-else block을 구현할 수 있지만,
+하나의 조건식(condition)을 세워서 만들 수도 있음.
+*/
+// 이 mixin은 x, y, z값을 받아서 left, top offset 값과 z-index 값에 할당해줘서 요소를 정렬하는 스타일 시트를 만들어 줌.
+@mixin position($x, $y, $z) {
+  position: absolute;
+  left: $x;
+  top: $y;
+  z-index: $z;
 
-  // if 조건문에서 $radius가 true인지 여부를 체크하도록 함.
-  @if $radius {
-    // true가 맞으면 border-radius값을 $h에 받아온 버튼 높이값의 절반만큼으로 할당함.
-    border-radius: $h / 2;
-  } @else {
-    // 만약 false 인 경우 else block을 실행함.
-    border: 1px solid red;
+  // 조건식을 세울 때, sass에서 equal sign은 '==' 로만 표시해줘야 함. 같지 않음은 '!='로 표현.
+  @if ($x == 50% and $y == 50%) {
+    // 이 조건식은 left, top로 가운데 정렬을 하려는 경우겠지?
+    transform: translate(-50%, -50%);
+  } @else if ($x == 50%) {
+    // x축만 가운데 정렬 하려는 경우
+    transform: translateX(-50%);
+  } @else if ($y == 50%) {
+    // y축만 가운데 정렬 하려는 경우
+    transform: translateY(-50%);
   }
 }
 
-.btn {
-  @include btn_radius(30px, true);
+div {
+  width: 300px;
+  height: 300px;
+  background: #000;
+
+  @include position(null, 50%, 2);
 }
