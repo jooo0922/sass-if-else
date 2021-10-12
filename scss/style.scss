@@ -1,0 +1,29 @@
+/*
+조건문은 @mixin 안에서 사용하도록 만들 수도 있음.
+
+그래서 매개변수로 넘겨주는 값이 true면 if 문을 실행해주고,
+값이 false이면 else 문을 실행해주도록 내부에서 조건문을 짤 수 있음.
+*/
+
+// $radius: true로 한 것은 뭐냐면, 두 번째 인자에 별도의 값을 전달하지 않을 시 기본값 true로 넣어주라는 뜻.
+@mixin btn_radius($h, $radius: true) {
+  padding: 0 20px;
+  height: $h;
+  line-height: $h;
+  text-align: center;
+  background: #000;
+  color: #fff;
+
+  // if 조건문에서 $radius가 true인지 여부를 체크하도록 함.
+  @if $radius {
+    // true가 맞으면 border-radius값을 $h에 받아온 버튼 높이값의 절반만큼으로 할당함.
+    border-radius: $h / 2;
+  } @else {
+    // 만약 false 인 경우 else block을 실행함.
+    border: 1px solid red;
+  }
+}
+
+.btn {
+  @include btn_radius(30px, true);
+}
